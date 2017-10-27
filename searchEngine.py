@@ -10,6 +10,7 @@
 import urllib2, time
 import re, random, types
 import requests
+from optparse import OptionParser
 from bs4 import BeautifulSoup
 
 class SearchEngine:
@@ -52,10 +53,10 @@ class SearchEngine:
         }
         return headers
 
-    def search(self, engine, keyword, total):
+    def search(self, engine, keyword, pages):
         search_urls = []
         keyword = urllib2.quote(keyword)
-
+        total = pages * 10
         for start in range(0, total, 10):
             if engine == "google":
                 self.base_url = self.google_url
@@ -63,6 +64,8 @@ class SearchEngine:
             elif engine == "baidu":
                 self.base_url = self.baidu_url
                 url = '%s/s?wd=%s&pn=%s' % (self.baidu_url, keyword, start)
+            else:
+                exit("请输入正确的搜索引擎类型：baidu、google")
             retry = 3
             while (retry > 0):
                 try:
@@ -146,9 +149,25 @@ class SearchEngine:
                 return results
 
 if __name__ == '__main__':
-    keyword = 'powered by wordpress'
     searchEngine = SearchEngine()
-    res = searchEngine.search("baidu", keyword, 30)
+
+    parser = OptionParser()
+    parser.add_option("-e", "--engine",
+                      dest = "engine",
+                      help="search engine:  baidu, google",
+                      default='baidu')
+    parser.add_option("-k", "--keyword",
+                      dest = "keyword",
+                      default=True,
+                      help="keyword")
+    parser.add_option("-p", "--pages",
+                      dest = "pages",
+                      default=0,
+                      type = int,
+                      help="page num")
+    (options, args) = parser.parse_args()
+
+    res = searchEngine.search(options.engine, options.keyword, options.pages)
     for r in res:
         print r
     print len(res)

@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/../searchEngine/.idea/searchEngine.iml" filepath="$PROJECT_DIR$/../searchEngine/.idea/searchEngine.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/typecho_install_rce_getshell_via_searchEngine.iml" filepath="$PROJECT_DIR$/.idea/typecho_install_rce_getshell_via_searchEngine.iml" />
     </modules>
   </component>
 </project>
